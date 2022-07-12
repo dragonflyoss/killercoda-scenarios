@@ -133,7 +133,7 @@ scheduler:
   # -- Override scheduler fullname
   fullnameOverride: ""
   # -- Number of Pods to launch
-  replicas: 3
+  replicas: 1
   # -- Image repository
   image: dragonflyoss/scheduler
   # -- Image tag
@@ -286,7 +286,7 @@ seedPeer:
   # -- Override scheduler fullname
   fullnameOverride: ""
   # -- Number of Pods to launch
-  replicas: 3
+  replicas: 1
   # -- Image repository
   image: dragonflyoss/dfdaemon
   # -- Image tag
@@ -784,7 +784,7 @@ manager:
   # -- Override manager fullname
   fullnameOverride: ""
   # -- Number of Pods to launch
-  replicas: 3
+  replicas: 1
   # -- Image repository
   image: dragonflyoss/manager
   # -- Image tag
