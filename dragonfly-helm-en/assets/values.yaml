@@ -334,7 +334,7 @@ seedPeer:
       mountPath: "/var/log/dragonfly/daemon"
   persistence:
     # -- Enable persistence for seed peer
-    enable: true
+    enable: false
     # -- Persistence annotations
     annotations: {}
     # -- Persistence access modes
@@ -947,6 +947,8 @@ mysql:
     service:
       # -- Mysql port
       port: 3306
+    persistence:
+      enabled: false
 
 externalMysql:
   # -- Running GORM migration
@@ -977,6 +979,11 @@ redis:
       ports:
         # -- Redis master service port
         redis: 6379
+    persistence:
+      enabled: false
+  replica:
+    persistence:
+      enabled: false
 
 externalRedis:
   # -- External redis hostname

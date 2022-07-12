@@ -31,7 +31,7 @@ containerRuntime:
   docker:
     # -- Enable docker support
     # Inject ca cert into /etc/docker/certs.d/, Refer: https://docs.docker.com/engine/security/certificates/.
-    enable: true
+    enable: false
     # -- Restart docker daemon to redirect traffic to dfdaemon
     # When containerRuntime.docker.restart=true, containerRuntime.docker.injectHosts and containerRuntime.registry.domains is ignored.
     # If did not want restart docker daemon, keep containerRuntime.docker.restart=false and containerRuntime.docker.injectHosts=true.
@@ -58,7 +58,6 @@ containerRuntime:
     registryDomains:
       - "ghcr.io"
       - "quay.io"
-      - "registry.cn-hangzhou.aliyuncs.com"
     # -- Registry ports
     registryPorts:
       - 443
@@ -134,7 +133,7 @@ scheduler:
   # -- Override scheduler fullname
   fullnameOverride: ""
   # -- Number of Pods to launch
-  replicas: 1
+  replicas: 3
   # -- Image repository
   image: dragonflyoss/scheduler
   # -- Image tag
@@ -218,7 +217,7 @@ scheduler:
       # Please remove it from your configuration.
       type: manager
       # -- Dynamic config refresh interval
-      refreshInterval: 1m
+      refreshInterval: 10s
     host:
       # -- IDC is the idc of scheduler instance
       idc: ""
@@ -287,7 +286,7 @@ seedPeer:
   # -- Override scheduler fullname
   fullnameOverride: ""
   # -- Number of Pods to launch
-  replicas: 1
+  replicas: 3
   # -- Image repository
   image: dragonflyoss/dfdaemon
   # -- Image tag
@@ -302,8 +301,8 @@ seedPeer:
       cpu: "0"
       memory: "0"
     limits:
-      cpu: "4"
-      memory: "8Gi"
+      cpu: "2"
+      memory: "4Gi"
   # -- Pod priorityClassName
   priorityClassName: ""
   # -- Node labels for pod assignment
@@ -335,7 +334,7 @@ seedPeer:
       mountPath: "/var/log/dragonfly/daemon"
   persistence:
     # -- Enable persistence for seed peer
-    enable: true
+    enable: false
     # -- Persistence annotations
     annotations: {}
     # -- Persistence access modes
@@ -785,7 +784,7 @@ manager:
   # -- Override manager fullname
   fullnameOverride: ""
   # -- Number of Pods to launch
-  replicas: 1
+  replicas: 3
   # -- Image repository
   image: dragonflyoss/manager
   # -- Image tag
@@ -830,7 +829,7 @@ manager:
   grpcPort: 65003
   service:
     # -- Service type
-    type: NodePort
+    type: ClusterIP
     # -- Service labels
     labels: {}
     # -- Service annotations
@@ -948,6 +947,8 @@ mysql:
     service:
       # -- Mysql port
       port: 3306
+    persistence:
+      enabled: false
 
 externalMysql:
   # -- Running GORM migration
@@ -978,6 +979,11 @@ redis:
       ports:
         # -- Redis master service port
         redis: 6379
+    persistence:
+      enabled: false
+  replica:
+    persistence:
+      enabled: false
 
 externalRedis:
   # -- External redis hostname
